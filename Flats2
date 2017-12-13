@@ -1,0 +1,45 @@
+# Второе задание про квартиры
+import csv
+
+flats_list = list()
+
+with open('output.csv', newline='') as csvfile:
+	flats_csv = csv.reader(csvfile, delimiter=';')
+	flats_list = list(flats_csv)
+
+list_new = [] #этот список для порядковых номеров новостроек
+#можете посмотреть содержимое файлв с квартирами через print, можете - на вкладке output.csv
+#print (flats_list)
+
+
+#TODO 1:
+#Напишите цикл, который проходит по всем квартирам, и печатает только новостройки
+#и их порядковые номера в файле. Подсказка:
+for i, flat in enumerate(flats_list):
+  if 'новостройка' in flat:
+    list_new.append(i)
+    print(i, flat[0], flat[2]) #для наглядности выводим не все параметры
+print('Всего новостроек {0}'.format(len(list_new)))
+
+#TODO 2:
+#При помощи пересечения множеств попробуйте сравнить больше двух новостроек между собой одновременно
+flats_intersesction = set(flats_list[list_new[0]])
+list_new.pop(0)
+# пересекаем все новостройки по примеру из задания
+for i in list_new: 
+  flats_intersesction &= set(flats_list[i])
+print (flats_intersesction)
+#Порядковые номера новостроек вы уже получили при выполнении предыдущего задания.
+#Не забудьте вывести результат функцией print
+
+#TODO3:
+#Вот так мы превратили наш массив квартир в словарь, где ключом является уникальный номер объявления,
+#а значением - ссылка на страничку с объявлением.
+#Измените код так, чтобы стало наоборот.
+test_dict = dict()
+for i, flat in enumerate(flats_list):
+  if i == 0:
+    continue
+  test_dict[flat[len(flat)-1]] = flat[0] #поменяли местами ссылку и уникальный номер
+print (test_dict)
+
