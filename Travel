@@ -1,0 +1,51 @@
+# Первое задание про путешествия
+# копипаст с занятия:
+day_cost = 15
+
+trip_count = 3
+
+trip_lenght_1 = 5
+trip_lenght_2 = 10
+trip_lenght_3 = 15
+
+flight_cost = 50
+flight_count = 6
+
+trip_cost = (trip_lenght_1 + trip_lenght_2 + trip_lenght_3) * day_cost
+
+trip_cost += flight_count * flight_cost
+
+print('Стоимость путешествия:', trip_cost, 'Евро')
+
+trip_restriction = 31
+
+if trip_lenght_1 + trip_lenght_2 + trip_lenght_3 <= trip_restriction:
+  print('Укладываемся в отпуск')
+else:
+  print('Нужно меньше отдыхать')
+
+# домашнее задание:-----------------------------------------------------
+
+euro_exchange_rate = 69.33
+print('Евро =', euro_exchange_rate, 'руб.')
+
+trip_cost_rub = trip_cost * euro_exchange_rate
+print('Стоимость путешествия в рублях:', trip_cost_rub)
+
+trip_budget = 60000
+
+if trip_cost_rub > trip_budget:
+  print('Выбери что-то попроще')
+
+spisok_rashodov_1 = [50, 400, 1500, 300, 780]
+spisok_rashodov_2 = [45, 12, 3000]
+
+print('1-й потратил:', sum(spisok_rashodov_1), 'руб.')
+print('2-й потратил:', sum(spisok_rashodov_2), 'руб.')
+
+ostatok = trip_budget - trip_cost_rub - (sum(spisok_rashodov_1) + sum(spisok_rashodov_2))
+
+print('Осталось', ostatok, 'руб.')
+
+  
+  
