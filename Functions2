@@ -1,0 +1,105 @@
+# Второе задание на функции
+
+students = [{'name': 'Pavel', 'surname': 'Morkovkin', 'gender': 'male', 'experience': False, 'Home_works': [2,5,7,9,5], 'exam': 8}, 
+            {'name': 'Maria', 'surname': 'Cheburashka', 'gender': 'female', 'experience': True, 'Home_works': [8,9,6,10,7], 'exam': 10},
+            {'name': 'Sveta', 'surname': 'Volk', 'gender': 'female', 'experience': False, 'Home_works': [5,9,4,2,7], 'exam': 5},
+            {'name': 'Andrey', 'surname': 'Zayats', 'gender': 'male', 'experience': True, 'Home_works': [8,4,9,10,8], 'exam': 9},
+            {'name': 'Sergey', 'surname': 'Romashkin', 'gender': 'male', 'experience': False, 'Home_works': [2,7,7,6,8], 'exam': 7},
+            {'name': 'Anton', 'surname': 'Pupsikov', 'gender': 'male', 'experience': True, 'Home_works': [1,10,10,9,10], 'exam': 10}]
+            
+''' 
+1. Средняя оценка за домашние задания по группе: X
+   Средняя оценка за экзамен: Y
+'''
+def function_1 (students):
+  marks_home = []
+  mark_exam = 0
+  for student in students:
+    marks_home += student['Home_works']
+    mark_exam += student['exam']
+  return [sum(marks_home)/len(marks_home), mark_exam/len(students)]
+
+'''
+ 2. Средняя оценка за домашние задания у мужчин: A
+    Средняя оценка за экзамен у мужчин: B
+    Средняя оценка за домашние задания у женщин: C
+    Средняя оценка за экзамен у женщин: D
+    
+    Средняя оценка за домашние задания у студентов с опытом: E
+    Средняя оценка за экзамен у студентов с опытом: F        
+    Средняя оценка за домашние задания у студентов без опыта: G
+    Средняя оценка за экзамен у студентов без опыта: H
+'''
+def function_2 (students, parametr, value):
+  students_1 = []
+  students_2 = []
+  for student in students:
+    if student[parametr] == value:
+      students_1 += [student]
+    else:
+      students_2 += [student]
+  av = function_1(students_1) + function_1(students_2)
+  return av
+
+'''
+ 3. 0.6 * его средняя оценка за домашние задания + 0.4 * оценка за экзамен в виде:
+    Лучший студент: S с интегральной оценкой Z
+    если студент один или:
+    Лучшие студенты: S... с интегральной оценкой Z
+'''
+def function_3 (students):
+  student_av_mark = {}
+  marks = []
+  for student in students:
+    student_av_mark[student['name'] + ' ' + student['surname']] = 0.6 * sum(student['Home_works'])/len(student['Home_works']) + 0.4 * student['exam']
+  for mark in student_av_mark.values():
+    marks += [mark]
+  max_mark = max(marks)
+  students_max_mark = []
+  for student, mark in student_av_mark.items():
+    if mark == max_mark:
+      students_max_mark += [student]
+  return students_max_mark, max_mark
+
+#---Beginning of programm----------------------------------------------------------------
+
+command = input('Введите команду 1, 2 или 3')
+
+if command == '1':
+  av = function_1(students)
+  print('Средняя оценка за домашние задания по группе:', av[0])
+  print('Средняя оценка за экзамен:', av[1])
+
+elif command == '2':
+  av = function_2 (students, parametr = 'gender', value = 'male')
+  print('Средняя оценка за домашние задания по группе у мужчин:', av[0])
+  print('Средняя оценка за экзамен у мужчин:', av[1])
+  print('Средняя оценка за домашние задания по группе у женщин:', av[2])
+  print('Средняя оценка за экзамен у женщин:', av[3])
+
+  av = function_2 (students, parametr = 'experience', value = True)
+  print('Средняя оценка за домашние задания по группе у студентов с опытом:', av[0])
+  print('Средняя оценка за экзамен у студентов с опытом:', av[1])
+  print('Средняя оценка за домашние задания по группе у студентов без опыта:', av[2])
+  print('Средняя оценка за экзамен у студентов без опыта:', av[3])
+
+elif command == '3':
+  students_max_mark, max_mark = function_3 (students)
+  if len(students_max_mark) == 1:
+    print ('Лучший студент: %s с интегральной оценкой %s' %(students_max_mark[0], max_mark))
+  else:
+    print ('Лучшие студенты: ', end='')
+    for student in students_max_mark:
+      if student != students_max_mark[len(students_max_mark)-1]:
+        print (student, end=', ')
+      else:
+        print (student, end=' ')
+    print ('с интегральной оценкой %s' % max_mark)
+
+else:
+  print('Не знаю такой команды')
+
+
+
+
+
