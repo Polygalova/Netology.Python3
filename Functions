@@ -1,0 +1,114 @@
+#Задание на функции
+documents = [
+        {"type": "passport", "number": "2207 876234", "name": "Василий Гупкин"},
+        {"type": "invoice", "number": "11-2", "name": "Геннадий Покемонов"},
+        {"type": "insurance", "number": "10006", "name": "Аристарх Павлов"}
+      ]
+
+directories = {
+        '1': ['2207 876234', '11-2'],
+        '2': ['10006'],
+        '3': []
+      }
+
+#p – people – команда, которая спросит номер документа и выведет имя человека, которому он принадлежит;
+
+def people (documents):
+  number = input('Введите номер документа')
+  for doc in documents:
+    if doc['number'] == number:
+      print(doc['name'])
+
+#l – list – команда, которая выведет список всех документов в формате passport "2207 876234" "Василий Гупкин";    
+
+def list (documents):
+  for doc in documents:
+    print(doc['type'], doc['number'], doc['name'])
+
+#s – shelf – команда, которая спросит номер документа и выведет номер полки, на которой он находится; 
+
+def shelf (directories):
+  number = input('Введите номер документа')
+  for key, value in directories.items():
+    if number in value:
+      print('Полка номер %s' %key)
+
+#a – add – команда, которая добавит новый документ в каталог и в перечень полок, спросив его номер, тип, имя владельца и номер полки, на котором он будет храниться.
+
+def add (documents, directories):
+  type = input('Тип документа')
+  number = input('Номер документа')
+  name = input('Имя и фамилия владельца')
+  documents.append({'type': type, 'number': number, 'name': name})
+  
+  shelf_number = input('Номер полки')
+  directories[shelf_number].append(number)
+  
+  return documents, directories
+
+#d – delete – команда, которая спросит номер документа и удалит его из каталога и из перечня полок;
+
+def delete (documents, directories):
+  number = input('Номер документа, который нужно удалить')
+  for document in documents:
+    if document['number'] == number:
+      documents.remove(document)
+  
+  for key, value in directories.items():
+    if number in value:
+      value.remove(number)
+      
+  return documents, directories
+
+#m – move – команда, которая спросит номер документа и целевую полку и переместит его с текущей полки на целевую;
+def move(directories):
+  number = input('Номер документа, который нужно переместить')
+  shelf_number = input('Номер полки, на которую переместить документ')
+  for key, value in directories.items():
+    if number in value:
+      value.remove(number)
+    if key == shelf_number:
+      value.append(number)
+  return directories
+
+#as – add shelf – команда, которая спросит номер новой полки и добавит ее в перечень;
+def add_shelf(directories):
+  number = input('Номер новой полки')
+  directories[number] = []
+  return directories
+
+
+call_fun = input('Знаю команды p, l, s, a, d, m, as, а. Выбери какую выполнить.')
+if call_fun == 'p':
+  people (documents)
+elif call_fun == 'l':
+  list (documents)
+elif call_fun == 's':
+  shelf (directories)
+elif call_fun == 'a':
+  documents, directories = add(documents, directories)
+elif call_fun == 'd':
+  documents, directories = delete(documents, directories)
+elif call_fun == 'm':
+  directories = move(directories)
+elif call_fun == 'as':
+  directories = add_shelf(directories)
+else:
+  print('Не умею такого.')
+
+for i in documents:
+  print(i)
+for i in directories.items():
+  print(i)
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
